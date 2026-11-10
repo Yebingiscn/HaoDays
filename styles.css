@@ -272,6 +272,26 @@ button:not(:disabled), summary { cursor: pointer; }
 .source a { color: var(--rust-deep); }
 .note-box { background: var(--paper-deep); padding: 15px 18px; margin-block: 18px 0; border-left: 2px solid var(--rust); }
 .note-box p { margin: 0; }
+.alipay-topics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 22px; margin-top: 14px; }
+.alipay-topics li { padding-left: 34px; }
+.alipay-topics li [lang] { display: block; color: var(--muted); font-size: .83rem; }
+.alipay-topics a { color: var(--rust-deep); font-weight: 650; }
+.alipay-setup h3 + p { margin-top: 6px; }
+.alipay-note p + p { margin-top: 8px; }
+.alipay-subheading { margin-top: 27px; }
+.alipay-steps { margin-top: 13px; }
+.alipay-steps > li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px clamp(16px, 2.8vw, 40px); align-items: start; padding-block: 18px; }
+.alipay-steps > li::before { top: 21px; }
+.alipay-steps h4 { margin: 0; font: 400 clamp(1.12rem, 2vw, 1.38rem)/1.25 var(--display); }
+.alipay-steps li p { margin: 6px 0 0; color: var(--muted); }
+.alipay-screenshots { display: grid; gap: 12px; max-width: 235px; }
+.alipay-screenshots-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 400px; }
+.alipay-screenshots figure { min-width: 0; margin: 0; }
+.alipay-screenshots a { display: block; border: 1px solid var(--rule); background: var(--paper-deep); }
+.alipay-screenshots a:hover { border-color: var(--rust); }
+.alipay-screenshots img { width: 100%; height: auto; }
+.alipay-screenshots figcaption { margin-top: 5px; color: var(--muted); font-size: .77rem; }
+.alipay-phrases .phrase-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .dish-grid, .numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-block: 18px; }
 .dish, .number { border: 1px solid var(--rule); padding: 14px; }
 .dish p { margin: 5px 0 0; color: var(--muted); font-size: .87rem; }
@@ -326,6 +346,11 @@ button:not(:disabled), summary { cursor: pointer; }
   .footer-main { flex-direction: column; align-items: start; gap: 15px; }
 }
 
+@media (max-width: 560px) {
+  .alipay-topics, .alipay-steps > li { grid-template-columns: minmax(0, 1fr); }
+  .alipay-steps > li { padding-left: 34px; }
+}
+
 @media (max-width: 420px) {
   .brand { gap: 8px; }
   .brand-label { padding-left: 8px; }
@@ -340,6 +365,8 @@ button:not(:disabled), summary { cursor: pointer; }
   .phrase-row { grid-template-columns: minmax(0, 1fr) auto; }
   .phrase-row dd:not(:last-child) { grid-column: 1; }
   .phrase-row dd:last-child { grid-column: 2; grid-row: 1 / span 2; }
+  .alipay-phrases .phrase-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .alipay-phrases .phrase-row dd:last-child { grid-column: 1; grid-row: auto; }
   .dish-grid { grid-template-columns: minmax(0, 1fr); }
   .number { padding: 9px; }
   .emergency-phrases > div { grid-template-columns: minmax(0, 1fr); }
