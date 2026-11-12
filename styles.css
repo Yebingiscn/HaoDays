@@ -88,7 +88,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero-intent { position: absolute; z-index: 4; top: 40px; left: 39%; font-size: .96rem; font-weight: 550; line-height: 1.55; letter-spacing: .025em; }
 .hero-intent span { display: block; margin-top: 12px; width: 108px; height: 23px; border-top: 4px solid #f49356; border-radius: 50%; transform: rotate(-8deg); }
 .hero-stage { position: absolute; z-index: 1; width: 76%; height: 610px; right: -7%; top: -22px; pointer-events: none; }
-.hero-art { position: absolute; z-index: 2; inset: -6% -2% 0 0; transform: translate3d(calc(var(--pointer-x, 0) * 13px), calc(var(--pointer-y, 0) * 9px), 0); transition: transform 1s ease-out; }
+.hero-art { position: absolute; z-index: 2; inset: 6% -2% 0 0; transform: translate3d(calc(var(--pointer-x, 0) * 13px), calc(var(--pointer-y, 0) * 9px), 0); transition: transform 1s ease-out; }
 .hero-art img { width: 100%; height: 100%; object-fit: contain; animation: landscape-float 9s ease-in-out infinite; }
 .silk { position: absolute; width: 100%; height: 100%; inset: 0; overflow: visible; filter: drop-shadow(0 20px 15px #7c75c027); pointer-events: none; }
 .silk-back { z-index: 3; }
@@ -108,10 +108,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .dream-card { min-width: 0; }
 .dream-card > a { position: relative; display: block; min-height: 222px; padding: 24px 24px 22px; text-decoration: none; isolation: isolate; transition: transform .3s; }
 .dream-card > a:hover { transform: translateY(-8px); }
-.card-silk { position: absolute; z-index: -1; inset: 0; border: 1.5px solid #ffffffe6; border-radius: 28% 30% 24% 24% / 32% 34% 30% 36%; box-shadow: inset 1px 3px 10px #ffffffdd, inset -4px -8px 20px #d5bcf15c, 0 20px 35px #a095d226; background: linear-gradient(130deg, #fffcff 0%, #ede0f7 55%, #d9d1ff 100%); animation: silk-breathe 9s ease-in-out infinite; }
-.dream-card-easy .card-silk { background: linear-gradient(140deg, #fff9e3 0%, #ffe2c9 55%, #ffc2a6 100%); box-shadow: inset 1px 3px 10px #fff, inset -4px -8px 20px #ff9c6f3d, 0 20px 35px #e5a17922; animation-delay: -2s; }
-.dream-card-trip .card-silk { background: linear-gradient(140deg, #e9f2ff 0%, #cfdeff 52%, #afc7ff 100%); animation-delay: -5s; }
-.dream-card-culture .card-silk { background: linear-gradient(140deg, #fff0ff 0%, #e7d3f5 55%, #e3cbf8 100%); animation-delay: -7s; }
+.card-silk { position: absolute; z-index: -1; inset: 0; border: 1.5px solid #ffffffe6; border-radius: 28px; box-shadow: inset 1px 3px 10px #ffffffdd, inset -4px -8px 20px #d5bcf15c, 0 20px 35px #a095d226; background: linear-gradient(130deg, #fffcff 0%, #ede0f7 55%, #d9d1ff 100%); }
+.dream-card-easy .card-silk { background: linear-gradient(140deg, #fff9e3 0%, #ffe2c9 55%, #ffc2a6 100%); box-shadow: inset 1px 3px 10px #fff, inset -4px -8px 20px #ff9c6f3d, 0 20px 35px #e5a17922; }
+.dream-card-trip .card-silk { background: linear-gradient(140deg, #e9f2ff 0%, #cfdeff 52%, #afc7ff 100%); }
+.dream-card-culture .card-silk { background: linear-gradient(140deg, #fff0ff 0%, #e7d3f5 55%, #e3cbf8 100%); }
 .card-copy { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: start; }
 .card-overline { margin-bottom: 4px; font-size: .55rem; text-transform: uppercase; font-weight: 700; letter-spacing: .13em; color: #555772; }
 .card-copy h3 { font-size: clamp(1.6rem, 2.3vw, 2.25rem); line-height: 1.08; font-weight: 850; letter-spacing: -.06em; font-style: italic; }
@@ -364,6 +364,7 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
 }
 @media (max-width: 560px) {
   .dream-grid { gap: 17px; }
+  .card-silk { border-radius: 22px; }
   .dream-card > a { padding: 21px 17px; min-height: 225px; }
   .card-overline { font-size: .49rem; }
   .card-deck { max-width: 14ch; }
