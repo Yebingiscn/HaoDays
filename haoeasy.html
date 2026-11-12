@@ -4,33 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Set up Alipay before your trip with screenshots and useful Mandarin phrases. Find quick guides to payments, trains, and rides in China.">
-  <meta name="theme-color" content="#f8f4ec">
+  <meta name="theme-color" content="#fff5f0">
   <title>HaoEasy — China Apps Made Easy | HaoDays</title>
   <link rel="icon" type="image/png" href="assets/haodays-logo.png">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=silk-1">
+  <script src="script.js?v=silk-1" defer></script>
 </head>
-<body>
+<body data-page="easy">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="masthead wrap">
-      <a class="brand" href="index.html" aria-label="HaoDays home">
-        <img src="assets/haodays-logo.png" alt="HaoDays" width="76" height="76">
-        <span class="brand-label eyebrow">The China<br>Field Guide</span>
-      </a>
-      <button type="button" class="nav-toggle button button-outline" aria-expanded="false" aria-controls="site-nav">
-        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg><span>Menu</span>
-      </button>
-      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="haotalk.html">HaoTalk</a>
-        <a href="haoeasy.html" aria-current="page">HaoEasy</a>
-        <a href="haotrip.html">HaoTrip</a>
-        <a href="haoculture.html">HaoCulture</a>
-      </nav>
-      <span class="edition eyebrow">Vol. 01</span>
+      <a class="brand" href="index.html" aria-label="HaoDays home">HaoDays<span class="brand-spark" aria-hidden="true">✳</span></a>
+      <span class="brand-label">Language <i>/</i> Apps <i>/</i> Travel <i>/</i> Culture</span>
+      <nav class="site-nav" aria-label="Main navigation"><a class="nav-talk" href="haotalk.html">HaoTalk</a>
+<a class="nav-easy" href="haoeasy.html" aria-current="page">HaoEasy</a>
+<a class="nav-trip" href="haotrip.html">HaoTrip</a>
+<a class="nav-culture" href="haoculture.html">HaoCulture</a></nav>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </header>
+  <dialog class="menu-dialog" id="site-menu" aria-labelledby="menu-title">
+    <button class="dialog-close" type="button" data-close-dialog aria-label="Close menu">×</button>
+    <p class="eyebrow">Your next Hao day</p><h2 id="menu-title">Where shall we go?</h2>
+    <nav aria-label="All pages"><a href="index.html"><span>00</span>Home</a><a href="haotalk.html"><span>01</span>HaoTalk <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+<a href="haoeasy.html"><span>02</span>HaoEasy <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+<a href="haotrip.html"><span>03</span>HaoTrip <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>
+<a href="haoculture.html"><span>04</span>HaoCulture <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a></nav>
+    <p class="menu-tagline">A Little Chinese, A Lot More China.</p>
+  </dialog>
   <main id="main" tabindex="-1">
     <div class="wrap">
       <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">HaoEasy</span></nav>
@@ -41,9 +42,27 @@
           <p class="cover-deck">Set up Alipay before your trip with screenshots and useful Mandarin phrases. Find quick references for payments, trains, and rides.</p>
           <a class="button button-primary" href="#alipay">Explore the Alipay guide <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15m-6-6 6 6 6-6"/></svg></a>
         </div>
-        <figure>
-          <span class="plate plate-easy" role="img" aria-label="A phone held next to a QR sign at a café counter"></span>
-          <figcaption class="image-caption eyebrow"><span>At the checkout</span><span>Fig. 02 &nbsp;/&nbsp; HaoEasy</span></figcaption>
+        <figure class="chapter-visual">
+          <div class="chapter-art"><svg class="silk silk-front" viewBox="-90 0 1350 700" fill="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="chapter-easy-silk" x1="170" y1="280" x2="1010" y2="590" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#ffc5a6"/><stop offset=".19" stop-color="#ffb066"/><stop offset=".38" stop-color="#fff3dc"/>
+          <stop offset=".53" stop-color="#ded8ff"/><stop offset=".72" stop-color="#a8baff"/><stop offset=".87" stop-color="#f6c2df"/><stop offset="1" stop-color="#fff2cf"/>
+        </linearGradient>
+        <linearGradient id="chapter-easy-shine" x1="590" y1="350" x2="660" y2="600" gradientUnits="userSpaceOnUse">
+          <stop stop-color="white" stop-opacity=".84"/><stop offset=".48" stop-color="white" stop-opacity="0"/><stop offset="1" stop-color="#6455c8" stop-opacity=".2"/>
+        </linearGradient>
+      </defs>
+      <g>
+        <path d="M -90 450 C 100 330 195 365 365 470 C 560 590 910 380 1210 210 C 1125 345 970 458 765 535 C 530 625 440 620 280 525 C 120 430 20 505 -90 480 Z" fill="url(#chapter-easy-silk)" stroke="#fff9f3" stroke-opacity=".9" stroke-width="1.4">
+          <animate begin="indefinite" attributeName="d" dur="10s" values="M -90 450 C 100 330 195 365 365 470 C 560 590 910 380 1210 210 C 1125 345 970 458 765 535 C 530 625 440 620 280 525 C 120 430 20 505 -90 480 Z;M -90 472 C 110 370 195 330 370 445 C 570 580 920 410 1210 190 C 1125 340 970 492 765 555 C 530 600 440 645 280 550 C 120 458 20 520 -90 502 Z;M -90 450 C 100 330 195 365 365 470 C 560 590 910 380 1210 210 C 1125 345 970 458 765 535 C 530 625 440 620 280 525 C 120 430 20 505 -90 480 Z" keyTimes="0;.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+        </path>
+        <path d="M -90 450 C 100 330 195 365 365 470 C 560 590 910 380 1210 210 C 1125 345 970 458 765 535 C 530 625 440 620 280 525 C 120 430 20 505 -90 480 Z" fill="url(#chapter-easy-shine)" stroke="white" stroke-opacity=".35" stroke-width=".8">
+          <animate begin="indefinite" attributeName="d" dur="10s" values="M -90 450 C 100 330 195 365 365 470 C 560 590 910 380 1210 210 C 1125 345 970 458 765 535 C 530 625 440 620 280 525 C 120 430 20 505 -90 480 Z;M -90 472 C 110 370 195 330 370 445 C 570 580 920 410 1210 190 C 1125 340 970 492 765 555 C 530 600 440 645 280 550 C 120 458 20 520 -90 502 Z;M -90 450 C 100 330 195 365 365 470 C 560 590 910 380 1210 210 C 1125 345 970 458 765 535 C 530 625 440 620 280 525 C 120 430 20 505 -90 480 Z" keyTimes="0;.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg><img src="assets/design/easy.webp" alt="" width="512" height="512" fetchpriority="high"></div>
+          <figcaption class="image-caption">HaoEasy · essential China apps</figcaption>
         </figure>
       </section>
       <div class="reading-layout">
@@ -58,7 +77,7 @@
           </ol>
         </nav>
         <div class="reading-flow">
-      <section class="story" id="alipay" aria-labelledby="alipay-title">
+      <section class="story reveal" id="alipay" aria-labelledby="alipay-title">
         <p class="eyebrow">App guide / <span lang="zh-Hans">支付宝</span></p>
         <h2 id="alipay-title">Your Essential Alipay Guide for China</h2>
         <h3>Guide contents</h3>
@@ -73,7 +92,7 @@
           <li>Check Your Payments <span lang="zh-Hans">查看账单与退款状态</span></li>
         </ol>
       </section>
-      <section class="story alipay-setup" id="alipay-setup" aria-labelledby="alipay-setup-title">
+      <section class="story alipay-setup reveal" id="alipay-setup" aria-labelledby="alipay-setup-title">
         <p class="eyebrow">Lesson 01 / Alipay</p>
         <h2 id="alipay-setup-title">How to Set Up Alipay</h2>
         <h3>What you'll learn</h3>
@@ -193,7 +212,7 @@
           <p>Eligible cards and verification requirements vary by issuer. Set up before traveling, and never include real card numbers, passport details, or SMS codes in tutorial screenshots.</p>
         </div>
       </section>
-      <section class="story" id="pay" aria-labelledby="pay-title">
+      <section class="story reveal" id="pay" aria-labelledby="pay-title">
         <p class="eyebrow">Quick reference / Mobile payments</p>
         <h2 id="pay-title">Alipay and WeChat Pay</h2>
         <p>Set up one payment app before you reach the counter. Overseas card support and verification depend on the app and your card issuer.</p>
@@ -205,7 +224,7 @@
         <div class="note-box"><p><strong>At the counter</strong> &nbsp;<span lang="zh-Hans">可以扫码吗？</span> · Can I scan the code?</p></div>
         <p class="source"><a href="https://english.www.gov.cn/2025special/bizexpatsinchina2025">State Council guide to payment services</a></p>
       </section>
-      <section class="story" id="rail" aria-labelledby="rail-title">
+      <section class="story reveal" id="rail" aria-labelledby="rail-title">
         <p class="eyebrow">Quick reference / Train tickets</p>
         <h2 id="rail-title">Railway 12306</h2>
         <p>China Railway’s 12306 service is the official place to book a train. Keep the same passport with you when you travel.</p>
@@ -216,7 +235,7 @@
         </ol>
         <p class="source"><a href="https://www.12306.cn/en/faq.html?item=1">China Railway’s English ticketing FAQ</a></p>
       </section>
-      <section class="story" id="rides" aria-labelledby="rides-title">
+      <section class="story reveal" id="rides" aria-labelledby="rides-title">
         <p class="eyebrow">Quick reference / Getting around</p>
         <h2 id="rides-title">Book a ride with DiDi</h2>
         <p>Use the DiDi Greater China app or the ride-hailing service inside a supported payment app. Keep your destination’s Chinese address handy.</p>
@@ -238,22 +257,22 @@
   <footer class="site-footer">
     <div class="wrap">
       <div class="footer-main">
-        <div>
-          <a class="footer-brand" href="index.html">HaoDays</a>
-          <p>A Little Chinese, A Lot More China.</p>
+        <div class="footer-identity">
+          <img src="assets/haodays-logo.png" alt="" width="94" height="94" loading="lazy">
+          <div><a class="footer-brand" href="index.html">HaoDays</a><p>A Little Chinese, A Lot More China.</p></div>
         </div>
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="haotalk.html">HaoTalk</a>
-        <a href="haoeasy.html" aria-current="page">HaoEasy</a>
-        <a href="haotrip.html">HaoTrip</a>
-        <a href="haoculture.html">HaoCulture</a>
-        </nav>
+        <nav class="footer-nav" aria-label="Footer navigation"><a href="haotalk.html">HaoTalk</a>
+<a href="haoeasy.html">HaoEasy</a>
+<a href="haotrip.html">HaoTrip</a>
+<a href="haoculture.html">HaoCulture</a></nav>
       </div>
-      <div class="footer-meta eyebrow">
-        <span>HaoDays &nbsp; / &nbsp; The China Field Guide</span>
-        <span>Cover illustration is AI-generated · App screenshots from HaoEasy</span>
-      </div>
+      <div class="footer-meta"><span>Learn Chinese · Travel China · Discover Culture</span><span>Illustrations are AI-generated · App screenshots from HaoEasy</span></div>
     </div>
   </footer>
+  <button type="button" class="motion-toggle" aria-pressed="false">
+    <svg class="pause-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+    <svg class="play-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+    <span>Pause motion</span>
+  </button>
 </body>
 </html>
