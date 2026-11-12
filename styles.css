@@ -93,8 +93,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .silk { position: absolute; width: 100%; height: 100%; inset: 0; overflow: visible; filter: drop-shadow(0 17px 15px #8e7ab526); pointer-events: none; }
 .silk-back { z-index: 1; }
 .silk-front { z-index: 4; }
-.silk-front > g { animation: silk-sway 11s ease-in-out infinite; transform-origin: 70% 75%; }
-.silk-back > g { animation: silk-sway 14s ease-in-out infinite reverse; transform-origin: 80% 40%; }
+.silk-front > g, .silk-back > g { animation: silk-sway 12s ease-in-out infinite; transform-origin: 70% 75%; }
 .petal { position: absolute; z-index: 4; width: 15px; height: 8px; border-radius: 95% 10% 95% 10%; background: linear-gradient(160deg, #fff0ee, #f79ab5 90%); box-shadow: 0 3px 6px #f99bab24; animation: petal-flight 13s ease-in-out infinite; }
 .petal-1 { left: 25%; top: 44%; animation-delay: -5s; }
 .petal-2 { left: 60%; top: 14%; animation-delay: -2s; width: 20px; height: 10px; }
