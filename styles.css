@@ -88,10 +88,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero-intent { position: absolute; z-index: 4; top: 40px; left: 39%; font-size: .96rem; font-weight: 550; line-height: 1.55; letter-spacing: .025em; }
 .hero-intent span { display: block; margin-top: 12px; width: 108px; height: 23px; border-top: 4px solid #f49356; border-radius: 50%; transform: rotate(-8deg); }
 .hero-stage { position: absolute; z-index: 1; width: 76%; height: 610px; right: -7%; top: -22px; pointer-events: none; }
-.hero-art { position: absolute; z-index: 2; inset: 6% -2% 0 0; transform: translate3d(calc(var(--pointer-x, 0) * 13px), calc(var(--pointer-y, 0) * 9px), 0); transition: transform 1s ease-out; }
+.hero-art { position: absolute; z-index: 2; inset: -1% 3% 7% -4%; transform: translate3d(calc(var(--pointer-x, 0) * 13px), calc(var(--pointer-y, 0) * 9px), 0); transition: transform 1s ease-out; }
 .hero-art img { width: 100%; height: 100%; object-fit: contain; animation: landscape-float 9s ease-in-out infinite; }
-.silk { position: absolute; width: 100%; height: 100%; inset: 0; overflow: visible; filter: drop-shadow(0 20px 15px #7c75c027); pointer-events: none; }
-.silk-back { z-index: 3; }
+.silk { position: absolute; width: 100%; height: 100%; inset: 0; overflow: visible; filter: drop-shadow(0 17px 15px #8e7ab526); pointer-events: none; }
+.silk-back { z-index: 1; }
 .silk-front { z-index: 4; }
 .silk-front > g { animation: silk-sway 11s ease-in-out infinite; transform-origin: 70% 75%; }
 .silk-back > g { animation: silk-sway 14s ease-in-out infinite reverse; transform-origin: 80% 40%; }
@@ -105,15 +105,22 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .petal-7 { left: 48%; top: 27%; animation-delay: -12s; width: 11px; }
 .dream-contents { position: relative; z-index: 5; padding-top: 18px; margin-bottom: 48px; }
 .dream-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(15px, 2vw, 30px); }
-.dream-card { min-width: 0; }
-.dream-card > a { position: relative; display: block; min-height: 222px; padding: 24px 24px 22px; text-decoration: none; isolation: isolate; transition: transform .3s; }
-.dream-card > a:hover { transform: translateY(-8px); }
-.card-silk { position: absolute; z-index: -1; inset: 0; border: 1.5px solid #ffffffe6; border-radius: 28px; box-shadow: inset 1px 3px 10px #ffffffdd, inset -4px -8px 20px #d5bcf15c, 0 20px 35px #a095d226; background: linear-gradient(130deg, #fffcff 0%, #ede0f7 55%, #d9d1ff 100%); }
-.dream-card-easy .card-silk { background: linear-gradient(140deg, #fff9e3 0%, #ffe2c9 55%, #ffc2a6 100%); box-shadow: inset 1px 3px 10px #fff, inset -4px -8px 20px #ff9c6f3d, 0 20px 35px #e5a17922; }
-.dream-card-trip .card-silk { background: linear-gradient(140deg, #e9f2ff 0%, #cfdeff 52%, #afc7ff 100%); }
-.dream-card-culture .card-silk { background: linear-gradient(140deg, #fff0ff 0%, #e7d3f5 55%, #e3cbf8 100%); }
+.dream-card { min-width: 0; --sheet-light: #fff4f9; --sheet-color: #e6d6f5; --sheet-depth: #c6b7ec; --sheet-shadow: #8f78b82a; }
+.dream-card > a { position: relative; display: block; height: 100%; min-height: 235px; padding: 35px 28px 30px; text-decoration: none; isolation: isolate; transition: transform .3s; }
+.dream-card > a:hover { transform: translateY(-6px); }
+.card-silk { position: absolute; z-index: -1; inset: -6px -5px -8px; width: calc(100% + 10px); height: calc(100% + 14px); overflow: visible; filter: drop-shadow(0 17px 16px var(--sheet-shadow)); pointer-events: none; }
+.card-silk > g { animation: ribbon-card-float 9s ease-in-out infinite; transform-origin: 45% 55%; }
+.sheet-light { stop-color: var(--sheet-light); }
+.sheet-color { stop-color: var(--sheet-color); }
+.sheet-depth { stop-color: var(--sheet-depth); }
+.dream-card-easy { --sheet-light: #fff5df; --sheet-color: #ffe0c9; --sheet-depth: #f8b990; --sheet-shadow: #ca94602a; }
+.dream-card-trip { --sheet-light: #eef3ff; --sheet-color: #cdddfd; --sheet-depth: #aabfee; --sheet-shadow: #7794d82e; }
+.dream-card-culture { --sheet-light: #fff0fa; --sheet-color: #e7cff1; --sheet-depth: #ccafe8; --sheet-shadow: #a57bb92b; }
+.dream-card-easy .card-silk > g { animation-delay: -2s; }
+.dream-card-trip .card-silk > g { animation-delay: -5s; }
+.dream-card-culture .card-silk > g { animation-delay: -7s; }
 .card-copy { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: start; }
-.card-overline { margin-bottom: 4px; font-size: .55rem; text-transform: uppercase; font-weight: 700; letter-spacing: .13em; color: #555772; }
+.card-overline { display: none; }
 .card-copy h3 { font-size: clamp(1.6rem, 2.3vw, 2.25rem); line-height: 1.08; font-weight: 850; letter-spacing: -.06em; font-style: italic; }
 .card-deck { margin-top: 10px; font-size: .85rem; line-height: 1.4; font-weight: 500; }
 .card-arrow { display: grid; place-items: center; width: 30px; height: 30px; margin-top: 19px; border: 1px solid #1b2a4896; border-radius: 50%; transition: background .2s, transform .2s; }
@@ -275,8 +282,9 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
 
 @keyframes landscape-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes icon-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-11px) rotate(2deg); } }
-@keyframes silk-sway { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(10px) rotate(1.3deg); } }
+@keyframes silk-sway { 0%, 100% { transform: translateY(0) rotate(-.4deg); } 50% { transform: translateY(5px) rotate(.4deg); } }
 @keyframes silk-breathe { 0%, 100% { border-radius: 28% 30% 24% 24% / 32% 34% 30% 36%; transform: rotate(-1deg); } 50% { border-radius: 33% 23% 30% 22% / 28% 38% 25% 31%; transform: rotate(1deg); } }
+@keyframes ribbon-card-float { 0%, 100% { transform: translateY(0) rotate(-.6deg); } 50% { transform: translateY(-4px) rotate(.6deg); } }
 @keyframes petal-flight { 0%, 100% { transform: translate3d(0, -20px, 0) rotate(-30deg); opacity: 0; } 15% { opacity: .85; } 70% { opacity: .8; } 95% { transform: translate3d(-95px, 110px, 0) rotate(190deg); opacity: 0; } }
 @keyframes sparkle { 0%, 100% { transform: scale(.8) rotate(0); opacity: .6; } 50% { transform: scale(1.1) rotate(15deg); opacity: 1; } }
 @keyframes ticker { to { transform: translateX(-50%); } }
@@ -285,7 +293,7 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
 @media (min-width: 1550px) {
   .dream-cover { min-height: 610px; }
   .hero-stage { height: 690px; }
-  .dream-card > a { min-height: 245px; padding: 30px; }
+  .dream-card > a { min-height: 250px; padding: 38px 32px; }
 }
 @media (max-width: 1210px) {
   .brand-label { display: none; }
@@ -298,7 +306,7 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
   .hero-actions .button { padding-inline: 18px; }
   .lesson-trigger { gap: 9px; }
   .lesson-trigger small { display: none; }
-  .dream-card > a { padding: 23px 19px 19px; min-height: 210px; }
+  .dream-card > a { padding: 34px 25px 27px; min-height: 225px; }
   .card-deck { font-size: .79rem; }
 }
 @media (max-width: 940px) {
@@ -309,7 +317,7 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
   .hero-copy { width: 55%; }
   .hero-actions { align-items: start; flex-direction: column; gap: 17px; }
   .dream-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-  .dream-card > a { min-height: 220px; padding: 25px; }
+  .dream-card > a { min-height: 235px; padding: 38px 29px; }
   .card-copy h3 { font-size: 2rem; }
   .card-deck { font-size: .88rem; }
   .card-icon { max-width: 210px; }
@@ -337,7 +345,7 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
   .lesson-trigger { font-size: .75rem; gap: 7px; max-width: 118px; }
   .play-circle { width: 36px; height: 36px; }
   .dream-contents { padding-top: 0; }
-  .dream-card > a { min-height: 222px; padding: 22px; }
+  .dream-card > a { min-height: 230px; padding: 36px 24px; }
   .card-copy h3 { font-size: clamp(1.4rem, 4.6vw, 2rem); }
   .card-icon { width: 58%; right: -4%; bottom: 0; max-width: 210px; }
   .card-deck { font-size: .8rem; }
@@ -363,10 +371,9 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
   .footer-identity img { width: 68px; height: 68px; }
 }
 @media (max-width: 560px) {
+  .dream-cover { min-height: clamp(550px, calc(350px + 55vw), 640px); }
   .dream-grid { gap: 17px; }
-  .card-silk { border-radius: 22px; }
-  .dream-card > a { padding: 21px 17px; min-height: 225px; }
-  .card-overline { font-size: .49rem; }
+  .dream-card > a { padding: 31px 17px 25px; min-height: 235px; }
   .card-deck { max-width: 14ch; }
   .card-icon { bottom: 0; right: -5%; width: 67%; }
   .dream-card-easy .card-icon { width: 70%; right: -8%; bottom: 0; }
@@ -392,11 +399,11 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: none; }
 }
 @media (max-width: 380px) {
   .dream-title { font-size: 3.3rem; }
-  .dream-cover { min-height: 610px; }
+  .dream-cover { min-height: 540px; }
   .hero-stage { top: 225px; height: 390px; }
   .hero-actions .button { padding-inline: 13px; }
   .hero-copy .hero-actions { gap: 12px; }
-  .dream-card > a { padding-inline: 14px; min-height: 220px; }
+  .dream-card > a { padding-inline: 14px; min-height: 230px; }
   .card-copy h3 { font-size: 1.35rem; }
   .card-deck { font-size: .74rem; }
   .footer-brand { font-size: 1.8rem; }
