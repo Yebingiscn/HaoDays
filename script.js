@@ -123,6 +123,38 @@ if (printCard) {
   window.addEventListener("afterprint", () => { delete document.body.dataset.printCard; });
 }
 
+const travelTicker = document.querySelector(".travel-ticker");
+
+if (travelTicker?.querySelector(".ticker-group")) {
+  const track = travelTicker.querySelector(".ticker-track");
+  const groups = [...track.querySelectorAll(".ticker-group")];
+  const template = groups[0].firstElementChild.cloneNode(true);
+  let itemCount = 0;
+
+  const fillTicker = () => {
+    const itemWidth = groups[0].firstElementChild.getBoundingClientRect().width;
+    if (!travelTicker.clientWidth || !itemWidth) return;
+
+    const copies = Math.max(2, Math.ceil(travelTicker.clientWidth / itemWidth) + 1);
+    if (copies !== itemCount) {
+      groups.forEach((group) => {
+        group.replaceChildren(...Array.from({ length: copies }, () => template.cloneNode(true)));
+      });
+      itemCount = copies;
+    }
+    const distance = groups[0].getBoundingClientRect().width;
+    track.style.setProperty("--ticker-duration", `${distance / 48}s`);
+  };
+
+  fillTicker();
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(fillTicker).observe(travelTicker);
+  } else {
+    window.addEventListener("resize", fillTicker, { passive: true });
+  }
+  document.fonts?.ready.then(fillTicker);
+}
+
 const motionButton = document.querySelector(".motion-toggle");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const silkScenes = [...document.querySelectorAll("svg.silk")];
