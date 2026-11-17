@@ -62,7 +62,7 @@
 .lesson-section-head .eyebrow { color: var(--lesson-accent); margin-bottom: 10px; }
 .lesson-section-head h2 { font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 800; letter-spacing: -.05em; margin-bottom: 12px; }
 .lesson-section-head > p:last-child { color: var(--muted); max-width: 65ch; font-size: .92rem; }
-.lesson-video-placeholder { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; overflow: hidden; aspect-ratio: 16 / 9; min-height: 250px; padding: 8%; border: 1px solid #fff; border-radius: 21px; background: radial-gradient(ellipse at 96% 4%, #fff2d4c9, transparent 65%), linear-gradient(130deg, #dce8fb, #e6d4ef 65%, #f8dbcc); }
+.lesson-video-placeholder { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; width: 100%; min-width: 0; max-width: 100%; overflow: hidden; aspect-ratio: 16 / 9; min-height: 250px; padding: 8%; border: 1px solid #fff; border-radius: 21px; background: radial-gradient(ellipse at 96% 4%, #fff2d4c9, transparent 65%), linear-gradient(130deg, #dce8fb, #e6d4ef 65%, #f8dbcc); }
 .lesson-video-mark { position: absolute; z-index: -1; right: 3%; bottom: -9%; color: #fff8; font-size: clamp(7rem, 16vw, 15rem); line-height: 1; font-weight: 850; font-style: italic; letter-spacing: -.1em; }
 .lesson-video-placeholder .eyebrow { color: #695282; }
 .lesson-video-placeholder h3 { font-size: clamp(1.7rem, 3vw, 3rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.1; margin: 13px 0 22px; }
@@ -230,7 +230,7 @@
   .lesson-resources { padding: 20px; }
   .lesson-resources .button { white-space: normal; }
   .lesson-step-end { gap: 12px; }
-  .lesson-video-placeholder { padding: 24px; }
+  .lesson-video-placeholder { aspect-ratio: auto; padding: 24px; }
   .talk-course-feature { grid-template-columns: 1fr; padding: 27px; }
   .talk-course-card { min-height: 220px; }
   .talk-course-card img { max-width: 190px; margin-top: -10px; }
