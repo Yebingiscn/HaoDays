@@ -310,6 +310,166 @@
   page.querySelector("#builder-pattern").addEventListener("change", updateBuilder);
   page.querySelector("#builder-item").addEventListener("change", updateBuilder);
 
+  // Keep native selects as the value source and as the fallback without JavaScript.
+  let openSelect = null;
+  function enhanceSelect(select) {
+    const label = select.labels[0];
+    const field = select.closest(".lesson-field");
+    const choices = [...select.options];
+    const wrapper = document.createElement("div");
+    wrapper.className = "lesson-select";
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.id = `${select.id}-control`;
+    trigger.className = "lesson-select-trigger";
+    trigger.setAttribute("role", "combobox");
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-labelledby", label.id);
+    trigger.innerHTML = '<span class="lesson-select-value"></span><svg class="lesson-select-chevron" aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const value = trigger.querySelector(".lesson-select-value");
+    const menu = document.createElement("div");
+    menu.id = `${select.id}-options`;
+    menu.className = "lesson-select-menu";
+    menu.setAttribute("role", "listbox");
+    menu.setAttribute("aria-labelledby", label.id);
+    menu.hidden = true;
+    trigger.setAttribute("aria-controls", menu.id);
+    const options = choices.map((choice, index) => {
+      const option = document.createElement("div");
+      option.id = `${select.id}-option-${index}`;
+      option.className = "lesson-select-option";
+      option.setAttribute("role", "option");
+      const text = document.createElement("span");
+      text.textContent = choice.text;
+      option.append(text);
+      option.insertAdjacentHTML("beforeend", '<svg class="lesson-select-check" aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="m3.5 8 3 3 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+      option.addEventListener("click", () => {
+        activate(index);
+        close(true);
+        trigger.focus({ preventScroll: true });
+      });
+      menu.append(option);
+      return option;
+    });
+    let activeIndex = select.selectedIndex;
+    let typed = "";
+    let lastTypedAt = 0;
+
+    function sync() {
+      value.textContent = choices[select.selectedIndex].text;
+      trigger.disabled = select.disabled;
+      options.forEach((option, index) => option.setAttribute("aria-selected", String(index === select.selectedIndex)));
+    }
+
+    function activate(index) {
+      activeIndex = Math.max(0, Math.min(index, options.length - 1));
+      options.forEach((option, optionIndex) => option.classList.toggle("is-active", optionIndex === activeIndex));
+      const option = options[activeIndex];
+      trigger.setAttribute("aria-activedescendant", option.id);
+      if (option.offsetTop < menu.scrollTop + 6) menu.scrollTop = option.offsetTop - 6;
+      else if (option.offsetTop + option.offsetHeight > menu.scrollTop + menu.clientHeight - 6) menu.scrollTop = option.offsetTop + option.offsetHeight - menu.clientHeight + 6;
+    }
+
+    function close(commit = false) {
+      if (menu.hidden) return;
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.removeAttribute("aria-activedescendant");
+      openSelect = null;
+      typed = "";
+      if (commit && select.selectedIndex !== activeIndex) {
+        select.selectedIndex = activeIndex;
+        select.dispatchEvent(new Event("input", { bubbles: true }));
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
+
+    function open(index = select.selectedIndex) {
+      if (!menu.hidden || trigger.disabled) return;
+      openSelect?.close(true);
+      menu.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      const bounds = trigger.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const leftEdge = (viewport?.offsetLeft || 0) + 12;
+      const topEdge = (viewport?.offsetTop || 0) + 12;
+      const rightEdge = leftEdge + (viewport?.width || document.documentElement.clientWidth) - 24;
+      const bottomEdge = topEdge + (viewport?.height || window.innerHeight) - 24;
+      const width = Math.min(Math.max(bounds.width, 190), rightEdge - leftEdge);
+      menu.style.width = `${width}px`;
+      menu.style.left = `${Math.max(leftEdge, Math.min(bounds.left, rightEdge - width))}px`;
+      const below = bottomEdge - bounds.bottom - 8;
+      const above = bounds.top - topEdge - 8;
+      const opensAbove = below < Math.min(menu.scrollHeight, 292) && above > below;
+      menu.style.maxHeight = `${Math.max(0, Math.min(292, opensAbove ? above : below))}px`;
+      menu.style.top = `${opensAbove ? bounds.top - 8 - menu.offsetHeight : bounds.bottom + 8}px`;
+      menu.style.setProperty("--menu-shift", opensAbove ? "5px" : "-5px");
+      openSelect = { field, menu, close };
+      activate(index);
+    }
+
+    trigger.addEventListener("click", () => menu.hidden ? open() : close());
+    trigger.addEventListener("keydown", (event) => {
+      if (event.ctrlKey || event.metaKey) return;
+      if (Date.now() - lastTypedAt >= 650 || event.key.length !== 1) typed = "";
+      const wasOpen = !menu.hidden;
+      const keys = ["ArrowDown", "ArrowUp", "Home", "End", "PageDown", "PageUp", "Enter", " ", "Escape"];
+      if (keys.includes(event.key)) event.preventDefault();
+      if (event.key === "Escape") {
+        if (wasOpen) { event.stopPropagation(); close(); }
+      } else if (event.key === "Tab") close(true);
+      else if (event.key === "Enter" || (event.key === " " && !typed)) wasOpen ? close(true) : open();
+      else if (event.key === "ArrowUp" && event.altKey) close(true);
+      else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        if (!wasOpen) open();
+        else activate(activeIndex + (event.key === "ArrowDown" ? 1 : -1));
+      } else if (event.key === "Home" || event.key === "End") {
+        const index = event.key === "Home" ? 0 : options.length - 1;
+        if (!wasOpen) open(index);
+        else activate(index);
+      } else if (wasOpen && (event.key === "PageDown" || event.key === "PageUp")) activate(activeIndex + (event.key === "PageDown" ? 10 : -10));
+      else if (event.key.length === 1 && !event.altKey) {
+        event.preventDefault();
+        if (!wasOpen) open();
+        const now = Date.now();
+        typed = now - lastTypedAt < 650 ? typed + event.key.toLowerCase() : event.key.toLowerCase();
+        lastTypedAt = now;
+        const repeated = [...typed].every((character) => character === typed[0]);
+        const query = repeated ? typed[0] : typed;
+        const start = activeIndex + (repeated ? 1 : 0);
+        for (let offset = 0; offset < choices.length; offset += 1) {
+          const index = (start + offset) % choices.length;
+          if (choices[index].text.toLowerCase().startsWith(query)) { activate(index); break; }
+        }
+      }
+    });
+    menu.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse") event.preventDefault();
+    });
+    select.addEventListener("change", sync);
+    wrapper.append(trigger);
+    select.before(wrapper);
+    document.body.append(menu);
+    sync();
+    select.hidden = true;
+    label.htmlFor = trigger.id;
+  }
+
+  page.querySelectorAll("#lesson-speed, #builder-pattern, #builder-item").forEach(enhanceSelect);
+  for (const eventName of ["pointerdown", "focusin"]) {
+    document.addEventListener(eventName, (event) => {
+      if (openSelect && !openSelect.field.contains(event.target) && !openSelect.menu.contains(event.target)) openSelect.close(true);
+    });
+  }
+  document.addEventListener("scroll", (event) => {
+    if (openSelect && !openSelect.menu.contains(event.target)) openSelect.close();
+  }, true);
+  window.addEventListener("resize", () => openSelect?.close());
+  window.visualViewport?.addEventListener("resize", () => openSelect?.close());
+  window.visualViewport?.addEventListener("scroll", () => openSelect?.close());
+  window.addEventListener("pagehide", () => openSelect?.close());
+
   page.querySelector("#lesson-reset").addEventListener("click", () => {
     stopSpeech("Listen, then try saying it yourself.");
     state = freshState();
