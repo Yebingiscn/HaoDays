@@ -185,11 +185,68 @@
         sourceLabel: "Hong Kong Tourism Board · Emergency services"
       }
     };
+    const section = $("#emergency");
+    const emergencyAudio = $("#emergency-phrase-audio", section);
+    const listenButtons = $$("[data-emergency-listen]", section);
+    const audioStatus = $("#emergency-audio-status", section);
+    let activeListenButton = null;
+    let playbackId = 0;
+
+    function updateListenButton(button) {
+      const active = button === activeListenButton;
+      const language = region === "hk" ? "Cantonese" : "Mandarin";
+      const phrase = $(".trip-emergency-translation", button.closest(".trip-emergency-phrase")).textContent;
+      button.classList.toggle("is-playing", active);
+      $(".trip-listen-label", button).textContent = active ? "Stop" : "Listen";
+      button.setAttribute("aria-label", `${active ? "Stop" : "Play"} ${language} audio: ${phrase}`);
+    }
+
+    function stopEmergencyAudio() {
+      playbackId += 1;
+      const previous = activeListenButton;
+      activeListenButton = null;
+      emergencyAudio.pause();
+      emergencyAudio.currentTime = 0;
+      if (previous) updateListenButton(previous);
+    }
+
+    async function playEmergencyAudio(button) {
+      const wasActive = button === activeListenButton;
+      stopEmergencyAudio();
+      audioStatus.textContent = "";
+      if (wasActive) return;
+
+      const playback = playbackId;
+      activeListenButton = button;
+      updateListenButton(button);
+      emergencyAudio.src = `assets/haotrip/emergency/${region}-${button.dataset.emergencyListen}.wav`;
+      try {
+        await emergencyAudio.play();
+      } catch {
+        if (playback === playbackId) {
+          stopEmergencyAudio();
+          audioStatus.textContent = "Audio could not play. Try again, or show the Chinese phrase.";
+        }
+      }
+    }
+
+    listenButtons.forEach((button) => {
+      button.hidden = false;
+      button.addEventListener("click", () => playEmergencyAudio(button));
+    });
+    if (emergencyAudio) {
+      emergencyAudio.addEventListener("ended", stopEmergencyAudio);
+      window.addEventListener("pagehide", stopEmergencyAudio);
+    }
+
     let emergencyRegion = null;
     function renderEmergencyCard() {
       if (emergencyRegion === region) return;
+      if (emergencyAudio) {
+        stopEmergencyAudio();
+        audioStatus.textContent = "";
+      }
       const card = emergencyCards[region];
-      const section = $("#emergency");
       const label = $(".trip-kicker", section);
       label.id = "emergency-region-label";
       label.textContent = `${card.name} · Your pocket card`;
@@ -214,6 +271,7 @@
       const source = $(".trip-source a", section);
       source.href = card.source;
       source.textContent = card.sourceLabel;
+      listenButtons.forEach(updateListenButton);
       emergencyRegion = region;
     }
     const all = () => region === "hk" ? D.hongkong : D.guides;

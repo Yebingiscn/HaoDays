@@ -191,6 +191,15 @@ body.trip-ready .trip-fallback { display: none; }
 .trip-emergency-phrases > div { padding: 22px; background: #eae2f1a0; border: 1px solid white; border-radius: 20px; }
 .trip-emergency-phrases p { font-size: 1.25rem; }
 .trip-emergency-phrases span { display: block; font-size: .875rem; margin-block: 12px; color: #726082; }
+.trip-emergency-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.trip-emergency-actions .trip-listen-label { margin: 0; color: inherit; }
+.trip-emergency-listen svg { width: 1rem; height: 1rem; flex: none; }
+.trip-emergency-listen .trip-stop-icon-path,
+.trip-emergency-listen.is-playing .trip-listen-icon-path { display: none; }
+.trip-emergency-listen.is-playing .trip-stop-icon-path { display: revert; }
+.trip-emergency-listen.is-playing { background: #e8dcf4; border-color: #b9a5d1; }
+.trip-emergency-audio-status { margin-top: 12px; color: #685579; font-size: .875rem; }
+.trip-emergency-audio-status:empty { margin: 0; }
 #trip-print { margin-top: 24px; }
 .trip-source { margin-top: 15px; font-size: .8rem; color: #81728e; }
 .trip-official-note { padding: 28px; border: 1px solid #e1d6e8; border-radius: 20px; margin-top: 60px; color: #776685; }
