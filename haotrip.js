@@ -169,6 +169,53 @@
     let category = requested?.category || "everyday";
     let selected = requested?.id || (region === "hk" ? "hk1" : "g19");
     let query = "";
+    const emergencyCards = {
+      mainland: {
+        name: "Mainland China", lang: "zh-Hans", numbers: ["110", "119", "120"],
+        labels: ["Police · 报警", "Fire · 火警", "Ambulance · 急救"],
+        phrases: ["请帮我报警。", "请帮我叫救护车。", "我的护照丢了。"],
+        source: "https://english.shanghai.gov.cn/en-EmergencyNumbers/20241210/cbc5280b9f96440a93234bfc5e0c1023.html",
+        sourceLabel: "Shanghai government · Emergency services"
+      },
+      hk: {
+        name: "Hong Kong", lang: "zh-Hant", numbers: ["999", "999", "999"],
+        labels: ["Police · 報警", "Fire · 火警", "Ambulance · 急救"],
+        phrases: ["請幫我報警。", "請幫我叫救護車。", "我的護照遺失了。"],
+        source: "https://www.discoverhongkong.com/eng/travel-guide/traveller-essentials/emergency-useful-numbers.html",
+        sourceLabel: "Hong Kong Tourism Board · Emergency services"
+      }
+    };
+    let emergencyRegion = null;
+    function renderEmergencyCard() {
+      if (emergencyRegion === region) return;
+      const card = emergencyCards[region];
+      const section = $("#emergency");
+      const label = $(".trip-kicker", section);
+      label.id = "emergency-region-label";
+      label.textContent = `${card.name} · Your pocket card`;
+      section.setAttribute("aria-labelledby", "emergency-region-label emergency-title");
+      section.dataset.region = region;
+      const numbers = $(".trip-emergency-numbers", section);
+      numbers.setAttribute("role", "group");
+      numbers.setAttribute("aria-label", `${card.name} emergency numbers`);
+      $$("a", numbers).forEach((link, index) => {
+        link.href = `tel:${card.numbers[index]}`;
+        link.setAttribute("aria-label", `${card.labels[index].split(" · ")[0]} in ${card.name}: ${card.numbers[index]}`);
+        $("strong", link).textContent = card.numbers[index];
+        $("span", link).textContent = card.labels[index];
+      });
+      // Update existing nodes so copy buttons and printing use the same card.
+      $$(".trip-emergency-phrases > div", section).forEach((item, index) => {
+        const phrase = $("p", item);
+        phrase.textContent = card.phrases[index];
+        phrase.lang = card.lang;
+        $("[data-trip-copy]", item).dataset.tripCopy = card.phrases[index];
+      });
+      const source = $(".trip-source a", section);
+      source.href = card.source;
+      source.textContent = card.sourceLabel;
+      emergencyRegion = region;
+    }
     const all = () => region === "hk" ? D.hongkong : D.guides;
     const visible = () => all().filter((guide) => (!query || [guide.title, guide.intro, guide.note, ...guide.steps].join(" ").toLowerCase().includes(query)) && (query || region === "hk" || guide.category === category));
     const updateURL = () => {
@@ -199,6 +246,7 @@
       $("#guide-read-progress").value = state.read.length;
     }
     function render() {
+      renderEmergencyCard();
       const list = visible();
       if (!list.some((guide) => guide.id === selected)) selected = list[0]?.id || "";
       const guide = list.find((item) => item.id === selected);
