@@ -498,16 +498,17 @@
     for (const id of ["stay-list", "stay-pins"]) $("#"+id).addEventListener("click", (event) => { const button = event.target.closest('[data-stay]'); if (button) { stayIndex = Number(button.dataset.stay); renderStay(); } });
     $("#stay-copy").addEventListener("click", (event) => copyText(S.stays[stayIndex].cn, event.currentTarget));
     renderStay();
+    const outfitImage = $("#outfit-image");
     $$('[data-temperature]').forEach((button) => button.addEventListener("click", () => setOutfit(Number(button.dataset.temperature))));
     function setOutfit(temperature) {
       const outfit = S.outfitSets.find((item) => temperature <= item.max);
       $("#outfit-temperature").textContent = `${temperature}°C`;
       $("#outfit-label").textContent = outfit.label;
       $("#outfit-chips").innerHTML = outfit.chips.map((chip) => `<span>${esc(chip)}</span>`).join("");
-      $("#outfit-image").src = D.images[temperature <= 13 ? "outfit-cold" : "outfit-mild"];
-      $("#outfit-image").alt = temperature <= 13 ? "Illustrative cool-weather outfit" : "Illustrative lighter outfit";
+      outfitImage.src = D.images[outfit.image];
+      outfitImage.alt = outfit.alt;
       $$('[data-temperature]').forEach((button) => button.setAttribute("aria-pressed", String(Number(button.dataset.temperature) === temperature)));
-      enter($("#outfit-image"));
+      enter(outfitImage);
     }
     setOutfit(10);
     $$('[data-open-phrases]').forEach((button) => button.addEventListener("click", () => openDialog("#trip-phrases")));
