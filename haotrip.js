@@ -66,6 +66,62 @@
       toast("Select and copy the text in the box.");
     }
   }
+  function createPhrasePlayer(audio, status) {
+    // Some visitors may still have the previous page markup cached.
+    if (!audio || !status) return null;
+    const clips = new Map();
+    let activeButton = null;
+    let playbackId = 0;
+
+    function updateButton(button) {
+      const playing = button === activeButton;
+      button.classList.toggle("is-playing", playing);
+      $(".trip-listen-label", button).textContent = playing ? "Stop" : "Listen";
+      button.setAttribute("aria-label", `${playing ? "Stop" : "Play"} ${clips.get(button).label}`);
+    }
+
+    function stop() {
+      playbackId += 1;
+      const previous = activeButton;
+      activeButton = null;
+      audio.pause();
+      audio.currentTime = 0;
+      status.textContent = "";
+      if (previous) updateButton(previous);
+    }
+
+    async function play(button) {
+      const wasActive = activeButton === button;
+      stop();
+      if (wasActive) return;
+
+      const request = playbackId;
+      activeButton = button;
+      updateButton(button);
+      audio.src = clips.get(button).src;
+      try {
+        await audio.play();
+      } catch {
+        if (request === playbackId) {
+          stop();
+          status.textContent = "Audio could not play. Try again, or show the Chinese phrase.";
+        }
+      }
+    }
+
+    function setClip(button, src, label) {
+      if (!clips.has(button)) {
+        button.addEventListener("click", () => play(button));
+        button.hidden = false;
+      }
+      clips.set(button, { src, label });
+      updateButton(button);
+    }
+
+    audio.addEventListener("ended", stop);
+    window.addEventListener("pagehide", stop);
+    return { setClip, stop };
+  }
   function openDialog(selector) {
     const dialog = $(selector);
     if (!dialog || dialog.open) return;
@@ -186,66 +242,13 @@
       }
     };
     const section = $("#emergency");
-    const emergencyAudio = $("#emergency-phrase-audio", section);
+    const emergencyPlayer = createPhrasePlayer($("#emergency-phrase-audio", section), $("#emergency-audio-status", section));
     const listenButtons = $$("[data-emergency-listen]", section);
-    const audioStatus = $("#emergency-audio-status", section);
-    let activeListenButton = null;
-    let playbackId = 0;
-
-    function updateListenButton(button) {
-      const active = button === activeListenButton;
-      const language = region === "hk" ? "Cantonese" : "Mandarin";
-      const phrase = $(".trip-emergency-translation", button.closest(".trip-emergency-phrase")).textContent;
-      button.classList.toggle("is-playing", active);
-      $(".trip-listen-label", button).textContent = active ? "Stop" : "Listen";
-      button.setAttribute("aria-label", `${active ? "Stop" : "Play"} ${language} audio: ${phrase}`);
-    }
-
-    function stopEmergencyAudio() {
-      playbackId += 1;
-      const previous = activeListenButton;
-      activeListenButton = null;
-      emergencyAudio.pause();
-      emergencyAudio.currentTime = 0;
-      if (previous) updateListenButton(previous);
-    }
-
-    async function playEmergencyAudio(button) {
-      const wasActive = button === activeListenButton;
-      stopEmergencyAudio();
-      audioStatus.textContent = "";
-      if (wasActive) return;
-
-      const playback = playbackId;
-      activeListenButton = button;
-      updateListenButton(button);
-      emergencyAudio.src = `assets/haotrip/emergency/${region}-${button.dataset.emergencyListen}.wav`;
-      try {
-        await emergencyAudio.play();
-      } catch {
-        if (playback === playbackId) {
-          stopEmergencyAudio();
-          audioStatus.textContent = "Audio could not play. Try again, or show the Chinese phrase.";
-        }
-      }
-    }
-
-    listenButtons.forEach((button) => {
-      button.hidden = false;
-      button.addEventListener("click", () => playEmergencyAudio(button));
-    });
-    if (emergencyAudio) {
-      emergencyAudio.addEventListener("ended", stopEmergencyAudio);
-      window.addEventListener("pagehide", stopEmergencyAudio);
-    }
 
     let emergencyRegion = null;
     function renderEmergencyCard() {
       if (emergencyRegion === region) return;
-      if (emergencyAudio) {
-        stopEmergencyAudio();
-        audioStatus.textContent = "";
-      }
+      emergencyPlayer?.stop();
       const card = emergencyCards[region];
       const label = $(".trip-kicker", section);
       label.id = "emergency-region-label";
@@ -271,7 +274,12 @@
       const source = $(".trip-source a", section);
       source.href = card.source;
       source.textContent = card.sourceLabel;
-      listenButtons.forEach(updateListenButton);
+      const language = region === "hk" ? "Cantonese" : "Mandarin";
+      listenButtons.forEach((button) => {
+        const translation = $(".trip-emergency-translation", button.closest(".trip-emergency-phrase")).textContent;
+        const src = `assets/haotrip/emergency/${region}-${button.dataset.emergencyListen}.wav`;
+        emergencyPlayer?.setClip(button, src, `${language} audio: ${translation}`);
+      });
       emergencyRegion = region;
     }
     const all = () => region === "hk" ? D.hongkong : D.guides;
@@ -526,9 +534,15 @@
       if (rice) food = '<rect x="76" y="105" width="148" height="101" rx="48" fill="url(#trip-dough)" transform="rotate(-15 150 155)"/><g stroke="#d6c2a4" stroke-width="3" stroke-linecap="round"><path d="M103 139l7 6M125 128l5 7M146 132l6 7M174 124l6 6M188 145l7 6M104 165l8 4M128 160l7 7M152 158l7 5M177 166l6 4M134 185l6 4"/></g>';
       return `<svg viewBox="0 0 300 300" aria-hidden="true"><defs><radialGradient id="trip-dough" cx=".35" cy=".25"><stop stop-color="#fffef0"/><stop offset="1" stop-color="#efd7b3"/></radialGradient><linearGradient id="trip-bowl" x2="0" y2="1"><stop stop-color="#f4edff"/><stop offset="1" stop-color="#a9a7d3"/></linearGradient></defs><circle cx="150" cy="150" r="132" fill="#fff7"/><ellipse cx="150" cy="218" rx="122" ry="45" fill="#d6c7dc" opacity=".45"/><ellipse cx="150" cy="208" rx="120" ry="43" fill="#fffbf4"/><ellipse cx="150" cy="205" rx="101" ry="30" fill="#f0e5d4"/>${food}<path d="M117 82C105 68 131 64 119 49M154 73C140 56 168 54 155 36M190 82C177 66 202 62 190 47" fill="none" stroke="#fff" stroke-width="5" opacity=".75" stroke-linecap="round"/></svg>`;
     }
+    const foodPlayer = createPhrasePlayer($("#food-phrase-audio"), $("#food-audio-status"));
+    const foodListen = $("#food-listen");
     $("#food-list").innerHTML = S.foods.map((food, index) => `<button type="button" class="trip-food-option" data-food="${index}" aria-pressed="${index === foodIndex}"><span>${esc(food.name)}</span><small lang="zh-Hans">${esc(food.cn)}</small></button>`).join("");
     function renderFood() {
       const food = S.foods[foodIndex];
+      foodPlayer?.stop();
+      if (foodListen) {
+        foodPlayer?.setClip(foodListen, `assets/haotrip/food-audio/${food.id}.wav`, `Mandarin ordering phrase for ${food.name}`);
+      }
       $("#food-name").textContent = food.name;
       $("#food-chinese").textContent = food.cn;
       $("#food-pinyin").textContent = food.py;

@@ -193,13 +193,13 @@ body.trip-ready .trip-fallback { display: none; }
 .trip-emergency-phrases span { display: block; font-size: .875rem; margin-block: 12px; color: #726082; }
 .trip-emergency-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .trip-emergency-actions .trip-listen-label { margin: 0; color: inherit; }
-.trip-emergency-listen svg { width: 1rem; height: 1rem; flex: none; }
-.trip-emergency-listen .trip-stop-icon-path,
-.trip-emergency-listen.is-playing .trip-listen-icon-path { display: none; }
-.trip-emergency-listen.is-playing .trip-stop-icon-path { display: revert; }
-.trip-emergency-listen.is-playing { background: #e8dcf4; border-color: #b9a5d1; }
-.trip-emergency-audio-status { margin-top: 12px; color: #685579; font-size: .875rem; }
-.trip-emergency-audio-status:empty { margin: 0; }
+:is(.trip-emergency-listen, .trip-food-listen) svg { width: 1rem; height: 1rem; flex: none; }
+:is(.trip-emergency-listen, .trip-food-listen) .trip-stop-icon-path,
+:is(.trip-emergency-listen, .trip-food-listen).is-playing .trip-listen-icon-path { display: none; }
+:is(.trip-emergency-listen, .trip-food-listen).is-playing .trip-stop-icon-path { display: revert; }
+:is(.trip-emergency-listen, .trip-food-listen).is-playing { background: #e8dcf4; border-color: #b9a5d1; }
+:is(.trip-emergency-audio-status, .trip-food-audio-status) { margin-top: 12px; color: #685579; font-size: .875rem; }
+:is(.trip-emergency-audio-status, .trip-food-audio-status):empty { margin: 0; }
 #trip-print { margin-top: 24px; }
 .trip-source { margin-top: 15px; font-size: .8rem; color: #81728e; }
 .trip-official-note { padding: 28px; border: 1px solid #e1d6e8; border-radius: 20px; margin-top: 60px; color: #776685; }
@@ -308,8 +308,9 @@ body.trip-ready .trip-fallback { display: none; }
 .trip-food-detail h3 { font-size: clamp(1.7rem, 2.8vw, 2.7rem); font-weight: 750; letter-spacing: -.05em; margin-top: 15px; }
 #food-intro { color: #76617f; margin-top: 15px; }
 .trip-food-phrase { margin-top: 20px; padding: 17px; border: 1px solid white; background: #fff7; border-radius: 17px; }
-.trip-food-phrase span { display: block; text-transform: uppercase; color: #9a7d9d; font-size: .75rem; letter-spacing: .06em; }
-.trip-food-phrase p { margin-top: 8px; color: #665181; font-size: 1.2rem; }
+.trip-food-phrase > span { display: block; text-transform: uppercase; color: #9a7d9d; font-size: .75rem; letter-spacing: .06em; }
+.trip-food-phrase-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 12px; margin-top: 8px; }
+#food-phrase { color: #665181; font-size: 1.2rem; min-width: 0; overflow-wrap: anywhere; }
 .trip-food-links { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; font-size: .875rem; color: #7d648e; }
 .trip-stay-grid { display: grid; grid-template-columns: .8fr 1.2fr 1fr; gap: 20px; align-items: center; }
 .trip-stay-list { display: grid; gap: 8px; }
